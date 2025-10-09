@@ -1,0 +1,20 @@
+extends: ["spectral:oas"]
+
+
+rules:
+  oas3-schema: off
+  info-description-required:
+    description: "The info object should have description"
+    given: "$.info"
+    then:
+      field: description
+      function: truthy
+    severity: warn
+
+  schema-property-description:
+    description: "All properties in schemas should have description"
+    given: "$.components.schemas.*.properties.*"
+    then:
+      field: description
+      function: truthy
+    severity: hint

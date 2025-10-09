@@ -1,0 +1,12 @@
+NewBook:
+  type: object
+  properties:
+    title:
+      type: string
+    authorId:
+      type: string
+    publishedYear:
+      type: integer
+  required:
+    - title
+    - authorId

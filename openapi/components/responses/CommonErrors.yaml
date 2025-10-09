@@ -1,0 +1,35 @@
+BadRequestError:
+  description: Bad Request
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+
+UnauthorizedError:
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+
+NotFoundError:
+  description: Not Found
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string

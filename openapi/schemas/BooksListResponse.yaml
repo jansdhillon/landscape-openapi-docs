@@ -1,0 +1,9 @@
+BooksListResponse:
+  type: object
+  properties:
+    books:
+      type: array
+      items:
+        $ref: "./Book.yaml#/Book"
+    total:
+      type: integer

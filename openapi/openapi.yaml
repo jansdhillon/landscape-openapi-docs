@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Landscape API
+  version: "0.0.1"
+
+servers:
+  - url: https://{landscape_root_url}/api
+    variables:
+      landscape_root_url:
+        default: landscape.canonical.com
+
+security:
+  - bearerAuth: []
+
+paths:
+  /books:
+    # ~1 is escaped /
+    $ref: "./paths/books.yaml#/paths/~1books"
+  /books/{bookId}:
+    $ref: "./paths/books.yaml#/paths/~1books~1{bookId}"
+  /authors:
+    $ref: "./paths/authors.yaml#/paths/~1authors"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Book:
+      $ref: "./schemas/Book.yaml#/Book"
+    Author:
+      $ref: "./schemas/Author.yaml#/Author"
+    NewBook:
+      $ref: "./schemas/NewBook.yaml#/NewBook"
+    UpdateBook:
+      $ref: "./schemas/UpdateBook.yaml#/UpdateBook"
+    BooksListResponse:
+      $ref: "./schemas/BooksListResponse.yaml#/BooksListResponse"
+
+  responses:
+    BadRequestError:
+      $ref: "./components/responses/CommonErrors.yaml#/BadRequestError"
+    UnauthorizedError:
+      $ref: "./components/responses/CommonErrors.yaml#/UnauthorizedError"
+    NotFoundError:
+      $ref: "./components/responses/CommonErrors.yaml#/NotFoundError"
