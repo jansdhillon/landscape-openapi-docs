@@ -19,7 +19,9 @@ jobs:
       - name: Regenerate OpenAPI bundle
         id: bundle
         run: |
+          mkdir -p dist
           make validate && make lint && make bundle
+          test -f dist/openapi.bundle.yaml
           echo "path=dist/openapi.bundle.yaml" >> "$GITHUB_OUTPUT"
 
       - name: Upload bundle artifact
