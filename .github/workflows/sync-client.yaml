@@ -1,0 +1,34 @@
+name: Sync API Clients with OpenAPI document (PR)
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  generate-openapi-bundle:
+    runs-on: ubuntu-latest
+    outputs:
+      bundle-path: ${{ steps.bundle.outputs.path }}
+    steps:
+      - name: checkout openapi repo
+        uses: actions/checkout@v4
+        with:
+            repository: "jansdhillon/landscape-openapi-docs"
+            
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Install swagger-cli
+        run: npm install -g swagger-cli
+
+      - name: Regenerate OpenAPI bundle
+        id: bundle
+        run: |
+          make validate && make lint && make bundle
+          echo "path=dist/openapi.bundle.yaml" >> "$GITHUB_OUTPUT"
+  check-go-client:
+    needs: generate-openapi-bundle
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Bundle lives at ${{ needs.generate-openapi-bundle.outputs.bundle-path }}"
