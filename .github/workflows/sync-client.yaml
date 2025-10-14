@@ -7,14 +7,12 @@ on:
 jobs:
   generate-openapi-bundle:
     runs-on: ubuntu-latest
-    outputs:
-      bundle-path: ${{ steps.bundle.outputs.path }}
     steps:
       - name: checkout openapi repo
         uses: actions/checkout@v4
         with:
-            repository: "jansdhillon/landscape-openapi-docs"
-            
+          repository: jansdhillon/landscape-openapi-docs
+
       - name: Install swagger-cli
         run: npm install -g swagger-cli
 
@@ -23,20 +21,39 @@ jobs:
         run: |
           make validate && make lint && make bundle
           echo "path=dist/openapi.bundle.yaml" >> "$GITHUB_OUTPUT"
-        
-  check-go-client:
-    needs: generate-openapi-bundle
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v4
         with:
           name: openapi-bundle
-          path: ${{ needs.generate-openapi-bundle.outputs.bundle-path }}
+          path: dist/openapi.bundle.yaml
+
+  check-go-client:
+    needs: generate-openapi-bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Go client repo
+        uses: actions/checkout@v4
+        with:
+          repository: jansdhillon/landscape-go-client
+
+      - name: Download OpenAPI bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: openapi-bundle
+          path: openapi
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.25'
+
       - name: Verify Go client
         run: go version
+
+      - name: Generate Go client with bundled OpenAPI spec
+        working-directory: client
+        env:
+          OPENAPI_SPEC: ../openapi/dist/openapi.bundle.yaml
+        run: go generate ./...
       
