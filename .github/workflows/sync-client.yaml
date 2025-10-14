@@ -14,14 +14,14 @@ jobs:
           repository: jansdhillon/landscape-openapi-docs
 
       - name: Install swagger-cli
-        run: npm install -g swagger-cli
+        run: npm install -g swagger-cli @stoplight/spectral-cli
 
       - name: Regenerate OpenAPI bundle
         id: bundle
         run: |
-          mkdir -p dist
-          make validate && make lint && make bundle
-          test -f dist/openapi.bundle.yaml
+          make validate
+          make lint
+          make bundle
           echo "path=dist/openapi.bundle.yaml" >> "$GITHUB_OUTPUT"
 
       - name: Upload bundle artifact
@@ -29,6 +29,7 @@ jobs:
         with:
           name: openapi-bundle
           path: dist/openapi.bundle.yaml
+          if-no-files-found: error
 
   check-go-client:
     needs: generate-openapi-bundle
