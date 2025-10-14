@@ -1,0 +1,49 @@
+paths:
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      operationId: loginWithPassword
+      summary: Authenticate with email and password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/auth.yaml#/LoginRequest"
+      responses:
+        "200":
+          description: Authentication succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "../schemas/auth.yaml#/LoginResponse"
+        "400":
+          $ref: "../responses/error.yaml#/BadRequest"
+        "401":
+          $ref: "../responses/error.yaml#/Unauthorized"
+      security: []
+  /api/login/access-key:
+    post:
+      tags:
+        - Authentication
+      operationId: loginWithAccessKey
+      summary: Authenticate with access and secret key.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/auth.yaml#/AccessKeyLoginRequest"
+      responses:
+        "200":
+          description: Authentication succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "../schemas/auth.yaml#/LoginResponse"
+        "400":
+          $ref: "../responses/error.yaml#/BadRequest"
+        "401":
+          $ref: "../responses/error.yaml#/Unauthorized"
+      security: []

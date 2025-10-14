@@ -1,0 +1,40 @@
+Script:
+  type: object
+  properties:
+    id:
+      type: integer
+    title:
+      type: string
+    version:
+      type: integer
+    createdAt:
+      type: string
+    createdBy:
+      type: string
+    lastEditedBy:
+      type: string
+    scriptProfiles:
+      type: array
+    status:
+      type: string
+    attachments:
+      type: array
+    code:
+      type: string
+    interpreter:
+      type: string
+    accessGroup:
+      type: string
+    timeLimit:
+      type: integer
+    username:
+      type: string
+    isRedactable:
+      type: boolean
+    isEditable:
+      type: boolean
+    isExecutable:
+      type: boolean
+  required:
+    - id
+    - title

@@ -1,0 +1,86 @@
+LoginRequest:
+  type: object
+  additionalProperties: false
+  properties:
+    email:
+      type: string
+      format: email
+      description: Email address used to authenticate with Landscape.
+    password:
+      type: string
+      format: password
+      description: Account password associated with the provided email.
+  required:
+    - email
+    - password
+
+AccessKeyLoginRequest:
+  type: object
+  additionalProperties: false
+  properties:
+    access_key:
+      type: string
+      description: Access key issued for API authentication.
+    secret_key:
+      type: string
+      description: Secret key paired with the access key.
+  required:
+    - access_key
+    - secret_key
+
+LoginAccount:
+  type: object
+  additionalProperties: false
+  properties:
+    default:
+      type: boolean
+      description: Indicates whether this is the default account.
+    name:
+      type: string
+      description: Internal account identifier.
+    title:
+      type: string
+      description: Display name for the account.
+    classic_dashboard_url:
+      type: string
+      format: uri
+      description: URL of the classic dashboard for the account.
+    subdomain:
+      type: string
+      nullable: true
+      description: Optional subdomain assigned to the account.
+  required:
+    - default
+    - name
+    - title
+
+LoginResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    accounts:
+      type: array
+      description: Accounts available to the authenticated user.
+      items:
+        $ref: "#/LoginAccount"
+    current_account:
+      type: string
+      description: Identifier of the account in current use.
+    email:
+      type: string
+      format: email
+      description: Email address of the authenticated user.
+    name:
+      type: string
+      description: Display name of the authenticated user.
+    self_hosted:
+      type: boolean
+      description: Indicates whether the Landscape deployment is self hosted.
+    token:
+      type: string
+      description: JWT used to authorize subsequent API requests.
+  required:
+    - accounts
+    - current_account
+    - email
+    - token

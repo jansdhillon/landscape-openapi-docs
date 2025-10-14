@@ -1,7 +1,0 @@
-UpdateBook:
-  type: object
-  properties:
-    title:
-      type: string
-    publishedYear:
-      type: integer

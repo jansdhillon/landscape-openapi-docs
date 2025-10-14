@@ -1,0 +1,118 @@
+CreateScriptAction:
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      type: string
+      description: Title for the new script.
+    time_limit:
+      type: integer
+      description: Maximum number of seconds the script may execute.
+    code:
+      type: string
+      description: Script contents encoded as base64 UTF-8.
+    username:
+      type: string
+      description: System user under which the script runs.
+    access_group:
+      type: string
+      description: Access group to assign the script to.
+  required:
+    - title
+    - code
+
+EditScriptAction:
+  type: object
+  additionalProperties: false
+  properties:
+    script_id:
+      type: integer
+      description: Identifier of the script being edited.
+    title:
+      type: string
+      description: Updated script title.
+    time_limit:
+      type: integer
+      description: Updated execution time limit in seconds.
+    code:
+      type: string
+      description: Updated script contents encoded as base64 UTF-8.
+    username:
+      type: string
+      description: Updated system user to execute the script.
+  required:
+    - script_id
+
+CopyScriptAction:
+  type: object
+  additionalProperties: false
+  properties:
+    script_id:
+      type: integer
+      description: ID of the script to copy.
+    destination_title:
+      type: string
+      description: Title for the cloned script.
+    access_group:
+      type: string
+      description: Access group for the cloned script.
+  required:
+    - script_id
+    - destination_title
+
+RemoveScriptAction:
+  type: object
+  additionalProperties: false
+  properties:
+    script_id:
+      type: integer
+      description: Identifier of the script to remove.
+  required:
+    - script_id
+
+CreateScriptAttachmentAction:
+  type: object
+  additionalProperties: false
+  properties:
+    script_id:
+      type: integer
+      description: Identifier of the script receiving the attachment.
+    file:
+      type: string
+      description: Attachment payload in the format `<filename>$$<base64 contents>`.
+  required:
+    - script_id
+    - file
+
+RemoveScriptAttachmentAction:
+  type: object
+  additionalProperties: false
+  properties:
+    script_id:
+      type: integer
+      description: Identifier of the script owning the attachment.
+    filename:
+      type: string
+      description: Name of the attachment to remove.
+  required:
+    - script_id
+    - filename
+
+LegacyActionRequest:
+  description: Legacy actions accept their parameters via query string and do not define a request body schema.
+  type: object
+
+CreateScriptAttachmentResult:
+  type: object
+  additionalProperties: false
+  properties:
+    filename:
+      type: string
+      description: Name of the attachment that was created.
+  required:
+    - filename
+
+LegacyActionResult:
+  oneOf:
+    - $ref: "../schemas/script.yaml#/Script"
+    - $ref: "#/CreateScriptAttachmentResult"

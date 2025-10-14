@@ -4,7 +4,7 @@ info:
   version: "0.0.1"
 
 servers:
-  - url: https://{landscape_root_url}/api
+  - url: https://{landscape_root_url}
     variables:
       landscape_root_url:
         default: landscape.canonical.com
@@ -13,13 +13,51 @@ security:
   - bearerAuth: []
 
 paths:
-  /books:
-    # ~1 is escaped /
-    $ref: "./paths/books.yaml#/paths/~1books"
-  /books/{bookId}:
-    $ref: "./paths/books.yaml#/paths/~1books~1{bookId}"
-  /authors:
-    $ref: "./paths/authors.yaml#/paths/~1authors"
+  "/api/scripts/{scriptId}":
+    parameters:
+      - $ref: "#/components/parameters/ScriptIdPathParam"
+    get:
+      operationId: getScript
+      description: Get a specific script.
+      responses:
+        "200":
+          $ref: "./components/responses/script.yaml#/GetScriptResponse"
+        "404":
+          $ref: "./components/responses/error.yaml#/ScriptNotFound"
+  "/api/scripts/{scriptId}:archive":
+    parameters:
+      - $ref: "#/components/parameters/ScriptIdPathParam"
+    post:
+      operationId: archiveScript
+      summary: Archive a script.
+      description: Archive a script and any associated script profiles. Redacted scripts cannot be archived.
+      responses:
+        "204":
+          description: Script archived successfully.
+        "401":
+          $ref: "./components/responses/error.yaml#/Unauthorized"
+        "404":
+          $ref: "./components/responses/error.yaml#/ScriptNotFound"
+  "/api/scripts/{scriptId}:redact":
+    parameters:
+      - $ref: "#/components/parameters/ScriptIdPathParam"
+    post:
+      operationId: redactScript
+      summary: Redact a script.
+      description: Redact a script, archive profiles, delete attachments, and redact script versions.
+      responses:
+        "204":
+          description: Script redacted successfully.
+        "401":
+          $ref: "./components/responses/error.yaml#/Unauthorized"
+        "404":
+          $ref: "./components/responses/error.yaml#/ScriptNotFound"
+  "/api/":
+    $ref: "./components/paths/actions.yaml#/paths/~1api~1"
+  "/api/login":
+    $ref: "./components/paths/auth.yaml#/paths/~1api~1login"
+  "/api/login/access-key":
+    $ref: "./components/paths/auth.yaml#/paths/~1api~1login~1access-key"
 
 components:
   securitySchemes:
@@ -28,22 +66,52 @@ components:
       scheme: bearer
       bearerFormat: JWT
 
+  parameters:
+    ScriptIdPathParam:
+      $ref: "./components/parameters/script.yaml#/ScriptIdPathParam"
+    LegacyVersionParam:
+      $ref: "./components/parameters/legacy.yaml#/LegacyVersionParam"
+    LegacyActionParam:
+      $ref: "./components/parameters/legacy.yaml#/LegacyActionParam"
+
   schemas:
-    Book:
-      $ref: "./schemas/Book.yaml#/Book"
-    Author:
-      $ref: "./schemas/Author.yaml#/Author"
-    NewBook:
-      $ref: "./schemas/NewBook.yaml#/NewBook"
-    UpdateBook:
-      $ref: "./schemas/UpdateBook.yaml#/UpdateBook"
-    BooksListResponse:
-      $ref: "./schemas/BooksListResponse.yaml#/BooksListResponse"
+    Script:
+      $ref: "./components/schemas/script.yaml#/Script"
+    CreateScriptAction:
+      $ref: "./components/schemas/legacy.yaml#/CreateScriptAction"
+    EditScriptAction:
+      $ref: "./components/schemas/legacy.yaml#/EditScriptAction"
+    CopyScriptAction:
+      $ref: "./components/schemas/legacy.yaml#/CopyScriptAction"
+    RemoveScriptAction:
+      $ref: "./components/schemas/legacy.yaml#/RemoveScriptAction"
+    CreateScriptAttachmentAction:
+      $ref: "./components/schemas/legacy.yaml#/CreateScriptAttachmentAction"
+    RemoveScriptAttachmentAction:
+      $ref: "./components/schemas/legacy.yaml#/RemoveScriptAttachmentAction"
+    LegacyActionRequest:
+      $ref: "./components/schemas/legacy.yaml#/LegacyActionRequest"
+    LegacyActionResult:
+      $ref: "./components/schemas/legacy.yaml#/LegacyActionResult"
+    LoginRequest:
+      $ref: "./components/schemas/auth.yaml#/LoginRequest"
+    AccessKeyLoginRequest:
+      $ref: "./components/schemas/auth.yaml#/AccessKeyLoginRequest"
+    LoginAccount:
+      $ref: "./components/schemas/auth.yaml#/LoginAccount"
+    LoginResponse:
+      $ref: "./components/schemas/auth.yaml#/LoginResponse"
+    Error:
+      $ref: "./components/schemas/error.yaml#/Error"
 
   responses:
-    BadRequestError:
-      $ref: "./components/responses/CommonErrors.yaml#/BadRequestError"
-    UnauthorizedError:
-      $ref: "./components/responses/CommonErrors.yaml#/UnauthorizedError"
-    NotFoundError:
-      $ref: "./components/responses/CommonErrors.yaml#/NotFoundError"
+    Unauthorized:
+      $ref: "./components/responses/error.yaml#/Unauthorized"
+    BadRequest:
+      $ref: "./components/responses/error.yaml#/BadRequest"
+    NotFound:
+      $ref: "./components/responses/error.yaml#/NotFound"
+    ScriptNotFound:
+      $ref: "./components/responses/error.yaml#/ScriptNotFound"
+    LegacyActionResponse:
+      $ref: "./components/responses/legacy.yaml#/LegacyActionResponse"

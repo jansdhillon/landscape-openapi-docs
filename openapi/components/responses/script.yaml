@@ -1,0 +1,6 @@
+GetScriptResponse:
+  description: The found script and its state.
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/script.yaml#/Script"

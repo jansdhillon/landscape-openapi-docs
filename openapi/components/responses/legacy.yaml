@@ -1,0 +1,6 @@
+LegacyActionResponse:
+  description: Result returned by a legacy action.
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/legacy.yaml#/LegacyActionResult"

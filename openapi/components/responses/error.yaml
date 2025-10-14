@@ -1,0 +1,27 @@
+BadRequest:
+  description: Bad Request
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/error.yaml#/Error"
+
+Unauthorized:
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/error.yaml#/Error"
+
+NotFound:
+  description: Not Found
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/error.yaml#/Error"
+
+ScriptNotFound:
+  description: The specified script does not exist.
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/error.yaml#/Error"

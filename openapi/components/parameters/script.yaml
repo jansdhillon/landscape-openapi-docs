@@ -1,0 +1,7 @@
+ScriptIdPathParam:
+  name: scriptId
+  in: path
+  required: true
+  schema:
+    type: integer
+  description: The ID of the script.

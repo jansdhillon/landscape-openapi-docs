@@ -1,0 +1,24 @@
+paths:
+  /api/:
+    parameters:
+      - $ref: "../parameters/legacy.yaml#/LegacyVersionParam"
+      - $ref: "../parameters/legacy.yaml#/LegacyActionParam"
+    post:
+      tags:
+        - Legacy Actions
+      operationId: invokeLegacyAction
+      summary: Invoke a legacy action.
+      description: >
+        Calls Landscape legacy API endpoints. Provide the desired action name in the `action`
+        query parameter and include the corresponding parameters in the query string.
+      responses:
+        "200":
+          $ref: "../responses/legacy.yaml#/LegacyActionResponse"
+        "204":
+          description: The legacy action completed successfully without a response body.
+        "400":
+          $ref: "../responses/error.yaml#/BadRequest"
+        "401":
+          $ref: "../responses/error.yaml#/Unauthorized"
+        "404":
+          $ref: "../responses/error.yaml#/NotFound"
