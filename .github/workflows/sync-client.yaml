@@ -39,12 +39,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: jansdhillon/landscape-go-client
+          path: landscape-go-client
 
       - name: Download OpenAPI bundle
         uses: actions/download-artifact@v4
         with:
           name: openapi-bundle
-          path: dist
+          path: landscape-openapi-docs/dist
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -55,7 +56,7 @@ jobs:
         run: go version
 
       - name: Generate Go client with bundled OpenAPI spec
-        working-directory: client
+        working-directory: landscape-go-client/client
         env:
-          OPENAPI_SPEC: ${{ github.workspace }}/dist/openapi.bundle.yaml
+          OPENAPI_SPEC: ${{ github.workspace }}/landscape-openapi-docs/dist/openapi.bundle.yaml
         run: go generate ./...
