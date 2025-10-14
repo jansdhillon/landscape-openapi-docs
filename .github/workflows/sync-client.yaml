@@ -44,7 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: openapi-bundle
-          path: openapi
+          path: dist
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -57,6 +57,5 @@ jobs:
       - name: Generate Go client with bundled OpenAPI spec
         working-directory: client
         env:
-          OPENAPI_SPEC: ../openapi/dist/openapi.bundle.yaml
+          OPENAPI_SPEC: ${{ github.workspace }}/dist/openapi.bundle.yaml
         run: go generate ./...
-      
