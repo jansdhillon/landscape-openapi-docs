@@ -15,10 +15,6 @@ jobs:
         with:
             repository: "jansdhillon/landscape-openapi-docs"
             
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: go.mod
-
       - name: Install swagger-cli
         run: npm install -g swagger-cli
 
@@ -27,6 +23,7 @@ jobs:
         run: |
           make validate && make lint && make bundle
           echo "path=dist/openapi.bundle.yaml" >> "$GITHUB_OUTPUT"
+        
   check-go-client:
     needs: generate-openapi-bundle
     runs-on: ubuntu-latest
