@@ -216,8 +216,8 @@ components:
             tfsdk: attachments
           items:
             oneOf:
-              - type: string
-              - $ref: '#/components/schemas/ScriptAttachments'
+              - $ref: '#/components/schemas/ScriptAttachment'
+              - $ref: '#/components/schemas/LegacyScriptAttachment'
         code:
           type: string
           x-oapi-codegen-extra-tags:
@@ -278,10 +278,8 @@ components:
       required:
         - id
         - name
-    ScriptAttachments:
+    ScriptAttachment:
       type: object
-      x-oapi-codegen-extra-tags:
-        tfsdk: attachments
       properties:
         id:
           type: integer
@@ -294,6 +292,8 @@ components:
       required:
         - id
         - filename
+    LegacyScriptAttachment:
+      type: string
     LegacyScriptCreator:
       type: object
       x-oapi-codegen-extra-tags:
