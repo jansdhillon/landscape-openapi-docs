@@ -3,38 +3,72 @@ Script:
   properties:
     id:
       type: integer
+      x-oapi-codegen-extra-tags:
+        tfsdk: "id"
     title:
       type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "title"
     version:
       type: integer
-    createdAt:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "version"
+    created_at:
       type: string
-    createdBy:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "created_at"
+    created_by:
       type: string
-    lastEditedBy:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "created_by"
+    last_edited_by:
       type: string
-    scriptProfiles:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "last_edited_by"
+    script_profiles:
       type: array
+      x-oapi-codegen-extra-tags:
+        tfsdk: "script_profiles"
     status:
       type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "status"
     attachments:
       type: array
+      x-oapi-codegen-extra-tags:
+        tfsdk: "attachments"
     code:
       type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "code"
     interpreter:
       type: string
-    accessGroup:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "interpreter"
+    access_group:
       type: string
-    timeLimit:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "access_group"
+    time_limit:
       type: integer
+      x-oapi-codegen-extra-tags:
+        tfsdk: "time_limit"
     username:
       type: string
-    isRedactable:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "username"
+    is_redactable:
       type: boolean
-    isEditable:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "is_redactable"
+    is_editable:
       type: boolean
-    isExecutable:
+      x-oapi-codegen-extra-tags:
+        tfsdk: "is_editable"
+    is_executable:
       type: boolean
+      x-oapi-codegen-extra-tags:
+        tfsdk: "is_executable"
   required:
     - id
     - title

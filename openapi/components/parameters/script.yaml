@@ -1,5 +1,5 @@
 ScriptIdPathParam:
-  name: scriptId
+  name: script_id
   in: path
   required: true
   schema:

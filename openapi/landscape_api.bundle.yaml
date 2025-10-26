@@ -10,11 +10,11 @@ servers:
 security:
   - bearerAuth: []
 paths:
-  '/api/scripts/{scriptId}':
+  '/api/scripts/{script_id}':
     parameters:
       - $ref: '#/components/parameters/ScriptIdPathParam'
     get:
-      operationId: getScript
+      operationId: get_script
       description: Get a specific script.
       responses:
         '200':
@@ -25,11 +25,11 @@ paths:
                 $ref: '#/components/schemas/Script'
         '404':
           $ref: '#/components/responses/ScriptNotFound'
-  '/api/scripts/{scriptId}:archive':
+  '/api/scripts/{script_id}:archive':
     parameters:
       - $ref: '#/components/parameters/ScriptIdPathParam'
     post:
-      operationId: archiveScript
+      operationId: archive_script
       summary: Archive a script.
       description: Archive a script and any associated script profiles. Redacted scripts cannot be archived.
       responses:
@@ -39,11 +39,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/ScriptNotFound'
-  '/api/scripts/{scriptId}:redact':
+  '/api/scripts/{script_id}:redact':
     parameters:
       - $ref: '#/components/parameters/ScriptIdPathParam'
     post:
-      operationId: redactScript
+      operationId: redact_script
       summary: Redact a script.
       description: 'Redact a script, archive profiles, delete attachments, and redact script versions.'
       responses:
@@ -60,7 +60,7 @@ paths:
     post:
       tags:
         - Legacy Actions
-      operationId: invokeLegacyAction
+      operationId: invoke_legacy_action
       summary: Invoke a legacy action.
       description: |
         Calls Landscape legacy API endpoints. Provide the desired action name in the `action` query parameter and include the corresponding parameters in the query string.
@@ -79,7 +79,7 @@ paths:
     post:
       tags:
         - Authentication
-      operationId: loginWithPassword
+      operationId: login_with_password
       summary: Authenticate with email and password.
       requestBody:
         required: true
@@ -103,7 +103,7 @@ paths:
     post:
       tags:
         - Authentication
-      operationId: loginWithAccessKey
+      operationId: login_with_access_key
       summary: Authenticate with access and secret key.
       requestBody:
         required: true
@@ -131,7 +131,7 @@ components:
       bearerFormat: JWT
   parameters:
     ScriptIdPathParam:
-      name: scriptId
+      name: script_id
       in: path
       required: true
       schema:
@@ -159,38 +159,72 @@ components:
       properties:
         id:
           type: integer
+          x-oapi-codegen-extra-tags:
+            tfsdk: id
         title:
           type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: title
         version:
           type: integer
-        createdAt:
+          x-oapi-codegen-extra-tags:
+            tfsdk: version
+        created_at:
           type: string
-        createdBy:
+          x-oapi-codegen-extra-tags:
+            tfsdk: created_at
+        created_by:
           type: string
-        lastEditedBy:
+          x-oapi-codegen-extra-tags:
+            tfsdk: created_by
+        last_edited_by:
           type: string
-        scriptProfiles:
+          x-oapi-codegen-extra-tags:
+            tfsdk: last_edited_by
+        script_profiles:
           type: array
+          x-oapi-codegen-extra-tags:
+            tfsdk: script_profiles
         status:
           type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: status
         attachments:
           type: array
+          x-oapi-codegen-extra-tags:
+            tfsdk: attachments
         code:
           type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: code
         interpreter:
           type: string
-        accessGroup:
+          x-oapi-codegen-extra-tags:
+            tfsdk: interpreter
+        access_group:
           type: string
-        timeLimit:
+          x-oapi-codegen-extra-tags:
+            tfsdk: access_group
+        time_limit:
           type: integer
+          x-oapi-codegen-extra-tags:
+            tfsdk: time_limit
         username:
           type: string
-        isRedactable:
+          x-oapi-codegen-extra-tags:
+            tfsdk: username
+        is_redactable:
           type: boolean
-        isEditable:
+          x-oapi-codegen-extra-tags:
+            tfsdk: is_redactable
+        is_editable:
           type: boolean
-        isExecutable:
+          x-oapi-codegen-extra-tags:
+            tfsdk: is_editable
+        is_executable:
           type: boolean
+          x-oapi-codegen-extra-tags:
+            tfsdk: is_executable
       required:
         - id
         - title
@@ -201,18 +235,28 @@ components:
         title:
           type: string
           description: Title for the new script.
+          x-oapi-codegen-extra-tags:
+            tfsdk: title
         time_limit:
           type: integer
           description: Maximum number of seconds the script may execute.
+          x-oapi-codegen-extra-tags:
+            tfsdk: time_limit
         code:
           type: string
           description: Script contents encoded as base64 UTF-8.
+          x-oapi-codegen-extra-tags:
+            tfsdk: code
         username:
           type: string
           description: System user under which the script runs.
+          x-oapi-codegen-extra-tags:
+            tfsdk: username
         access_group:
           type: string
           description: Access group to assign the script to.
+          x-oapi-codegen-extra-tags:
+            tfsdk: access_group
       required:
         - title
         - code
@@ -223,18 +267,28 @@ components:
         script_id:
           type: integer
           description: Identifier of the script being edited.
+          x-oapi-codegen-extra-tags:
+            tfsdk: script_id
         title:
           type: string
           description: Updated script title.
+          x-oapi-codegen-extra-tags:
+            tfsdk: title
         time_limit:
           type: integer
           description: Updated execution time limit in seconds.
+          x-oapi-codegen-extra-tags:
+            tfsdk: time_limit
         code:
           type: string
           description: Updated script contents encoded as base64 UTF-8.
+          x-oapi-codegen-extra-tags:
+            tfsdk: code
         username:
           type: string
           description: Updated system user to execute the script.
+          x-oapi-codegen-extra-tags:
+            tfsdk: username
       required:
         - script_id
     CopyScriptAction:
@@ -244,12 +298,18 @@ components:
         script_id:
           type: integer
           description: ID of the script to copy.
+          x-oapi-codegen-extra-tags:
+            tfsdk: script_id
         destination_title:
           type: string
           description: Title for the cloned script.
+          x-oapi-codegen-extra-tags:
+            tfsdk: destination_title
         access_group:
           type: string
           description: Access group for the cloned script.
+          x-oapi-codegen-extra-tags:
+            tfsdk: access_group
       required:
         - script_id
         - destination_title
@@ -260,6 +320,8 @@ components:
         script_id:
           type: integer
           description: Identifier of the script to remove.
+          x-oapi-codegen-extra-tags:
+            tfsdk: script_id
       required:
         - script_id
     CreateScriptAttachmentAction:
@@ -269,9 +331,13 @@ components:
         script_id:
           type: integer
           description: Identifier of the script receiving the attachment.
+          x-oapi-codegen-extra-tags:
+            tfsdk: script_id
         file:
           type: string
           description: Attachment payload in the format `<filename>$$<base64 contents>`.
+          x-oapi-codegen-extra-tags:
+            tfsdk: file
       required:
         - script_id
         - file
@@ -282,9 +348,13 @@ components:
         script_id:
           type: integer
           description: Identifier of the script owning the attachment.
+          x-oapi-codegen-extra-tags:
+            tfsdk: script_id
         filename:
           type: string
           description: Name of the attachment to remove.
+          x-oapi-codegen-extra-tags:
+            tfsdk: filename
       required:
         - script_id
         - filename
@@ -300,6 +370,8 @@ components:
             filename:
               type: string
               description: Name of the attachment that was created.
+              x-oapi-codegen-extra-tags:
+                tfsdk: filename
           required:
             - filename
     LoginRequest:
@@ -309,11 +381,21 @@ components:
         email:
           type: string
           format: email
-          description: Email address used to authenticate with Landscape.
+          description: Email address used to authenticate with Landscape Server.
+          x-oapi-codegen-extra-tags:
+            tfsdk: email
         password:
           type: string
           format: password
-          description: Account password associated with the provided email.
+          description: Password associated with the provided email.
+          x-oapi-codegen-extra-tags:
+            tfsdk: password
+        account:
+          type: string
+          nullable: true
+          description: The account to login into (optional).
+          x-oapi-codegen-extra-tags:
+            tfsdk: account
       required:
         - email
         - password
@@ -324,9 +406,13 @@ components:
         access_key:
           type: string
           description: Access key issued for API authentication.
+          x-oapi-codegen-extra-tags:
+            tfsdk: access_key
         secret_key:
           type: string
           description: Secret key paired with the access key.
+          x-oapi-codegen-extra-tags:
+            tfsdk: secret_key
       required:
         - access_key
         - secret_key
@@ -337,20 +423,30 @@ components:
         default:
           type: boolean
           description: Indicates whether this is the default account.
+          x-oapi-codegen-extra-tags:
+            tfsdk: default
         name:
           type: string
           description: Internal account identifier.
+          x-oapi-codegen-extra-tags:
+            tfsdk: name
         title:
           type: string
           description: Display name for the account.
+          x-oapi-codegen-extra-tags:
+            tfsdk: title
         classic_dashboard_url:
           type: string
           format: uri
           description: URL of the classic dashboard for the account.
+          x-oapi-codegen-extra-tags:
+            tfsdk: classic_dashboard_url
         subdomain:
           type: string
           nullable: true
           description: Optional subdomain assigned to the account.
+          x-oapi-codegen-extra-tags:
+            tfsdk: subdomain
       required:
         - default
         - name
@@ -362,24 +458,36 @@ components:
         accounts:
           type: array
           description: Accounts available to the authenticated user.
+          x-oapi-codegen-extra-tags:
+            tfsdk: accounts
           items:
             $ref: '#/components/schemas/LoginAccount'
         current_account:
           type: string
           description: Identifier of the account in current use.
+          x-oapi-codegen-extra-tags:
+            tfsdk: current_account
         email:
           type: string
           format: email
           description: Email address of the authenticated user.
+          x-oapi-codegen-extra-tags:
+            tfsdk: email
         name:
           type: string
           description: Display name of the authenticated user.
+          x-oapi-codegen-extra-tags:
+            tfsdk: name
         self_hosted:
           type: boolean
           description: Indicates whether the Landscape deployment is self hosted.
+          x-oapi-codegen-extra-tags:
+            tfsdk: self_hosted
         token:
           type: string
           description: JWT used to authorize subsequent API requests.
+          x-oapi-codegen-extra-tags:
+            tfsdk: token
       required:
         - accounts
         - current_account
@@ -390,8 +498,12 @@ components:
       properties:
         code:
           type: integer
+          x-oapi-codegen-extra-tags:
+            tfsdk: code
         message:
           type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: message
   responses:
     Unauthorized:
       description: Unauthorized

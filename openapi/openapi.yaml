@@ -13,22 +13,22 @@ security:
   - bearerAuth: []
 
 paths:
-  "/api/scripts/{scriptId}":
+  "/api/scripts/{script_id}":
     parameters:
       - $ref: "#/components/parameters/ScriptIdPathParam"
     get:
-      operationId: getScript
+      operationId: get_script
       description: Get a specific script.
       responses:
         "200":
           $ref: "./components/responses/script.yaml#/GetScriptResponse"
         "404":
           $ref: "./components/responses/error.yaml#/ScriptNotFound"
-  "/api/scripts/{scriptId}:archive":
+  "/api/scripts/{script_id}:archive":
     parameters:
       - $ref: "#/components/parameters/ScriptIdPathParam"
     post:
-      operationId: archiveScript
+      operationId: archive_script
       summary: Archive a script.
       description: Archive a script and any associated script profiles. Redacted scripts cannot be archived.
       responses:
@@ -38,11 +38,11 @@ paths:
           $ref: "./components/responses/error.yaml#/Unauthorized"
         "404":
           $ref: "./components/responses/error.yaml#/ScriptNotFound"
-  "/api/scripts/{scriptId}:redact":
+  "/api/scripts/{script_id}:redact":
     parameters:
       - $ref: "#/components/parameters/ScriptIdPathParam"
     post:
-      operationId: redactScript
+      operationId: redact_script
       summary: Redact a script.
       description: Redact a script, archive profiles, delete attachments, and redact script versions.
       responses:

@@ -6,14 +6,20 @@ LoginRequest:
       type: string
       format: email
       description: Email address used to authenticate with Landscape Server.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "email"
     password:
       type: string
       format: password
       description: Password associated with the provided email.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "password"
     account:
       type: string
       nullable: true
       description: The account to login into (optional).
+      x-oapi-codegen-extra-tags:
+        tfsdk: "account"
   required:
     - email
     - password
@@ -25,9 +31,13 @@ AccessKeyLoginRequest:
     access_key:
       type: string
       description: Access key issued for API authentication.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "access_key"
     secret_key:
       type: string
       description: Secret key paired with the access key.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "secret_key"
   required:
     - access_key
     - secret_key
@@ -39,20 +49,30 @@ LoginAccount:
     default:
       type: boolean
       description: Indicates whether this is the default account.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "default"
     name:
       type: string
       description: Internal account identifier.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "name"
     title:
       type: string
       description: Display name for the account.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "title"
     classic_dashboard_url:
       type: string
       format: uri
       description: URL of the classic dashboard for the account.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "classic_dashboard_url"
     subdomain:
       type: string
       nullable: true
       description: Optional subdomain assigned to the account.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "subdomain"
   required:
     - default
     - name
@@ -65,24 +85,36 @@ LoginResponse:
     accounts:
       type: array
       description: Accounts available to the authenticated user.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "accounts"
       items:
         $ref: "#/LoginAccount"
     current_account:
       type: string
       description: Identifier of the account in current use.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "current_account"
     email:
       type: string
       format: email
       description: Email address of the authenticated user.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "email"
     name:
       type: string
       description: Display name of the authenticated user.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "name"
     self_hosted:
       type: boolean
       description: Indicates whether the Landscape deployment is self hosted.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "self_hosted"
     token:
       type: string
       description: JWT used to authorize subsequent API requests.
+      x-oapi-codegen-extra-tags:
+        tfsdk: "token"
   required:
     - accounts
     - current_account

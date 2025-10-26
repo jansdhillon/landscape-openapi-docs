@@ -1,4 +1,4 @@
-name: Sync API Clients with OpenAPI document (PR)
+name: Sync API Client with OpenAPI document (PR)
 
 on:
   pull_request:
@@ -22,13 +22,13 @@ jobs:
           make validate
           make lint
           make bundle
-          echo "path=dist/openapi.bundle.yaml" >> "$GITHUB_OUTPUT"
+          echo "path=openapi/landscape_api.bundle.yaml" >> "$GITHUB_OUTPUT"
 
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v4
         with:
           name: openapi-bundle
-          path: dist/openapi.bundle.yaml
+          path: openapi/landscape_api.bundle.yaml
           if-no-files-found: error
 
   check-go-client:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: openapi-bundle
-          path: landscape-openapi-docs/dist
+          path: landscape-openapi-docs/openapi
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -58,5 +58,5 @@ jobs:
       - name: Generate Go client with bundled OpenAPI spec
         working-directory: landscape-go-client/client
         env:
-          OPENAPI_SPEC: ${{ github.workspace }}/landscape-openapi-docs/dist/openapi.bundle.yaml
+          OPENAPI_SPEC: ${{ github.workspace }}/landscape-openapi-docs/openapi/landscape_api.bundle.yaml
         run: go generate ./...

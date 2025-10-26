@@ -6,7 +6,7 @@ paths:
     post:
       tags:
         - Legacy Actions
-      operationId: invokeLegacyAction
+      operationId: invoke_legacy_action
       summary: Invoke a legacy action.
       description: >
         Calls Landscape legacy API endpoints. Provide the desired action name in the `action`

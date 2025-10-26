@@ -5,4 +5,4 @@ lint:
 	spectral lint openapi/openapi.yaml
 
 bundle:
-	swagger-cli bundle openapi/openapi.yaml -o dist/openapi.bundle.yaml -t yaml
+	swagger-cli bundle openapi/openapi.yaml -o openapi/landscape_api.bundle.yaml -t yaml
