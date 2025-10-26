@@ -165,42 +165,68 @@ components:
           type: string
           x-oapi-codegen-extra-tags:
             tfsdk: title
-        version:
+        version_number:
           type: integer
+          nullable: true
           x-oapi-codegen-extra-tags:
-            tfsdk: version
+            tfsdk: version_number
         created_at:
           type: string
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: created_at
         created_by:
-          type: string
+          $ref: '#/components/schemas/ScriptCreator'
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: created_by
-        last_edited_by:
+        last_edited_at:
           type: string
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: last_edited_at
+        last_edited_by:
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: last_edited_by
+          oneOf:
+            - $ref: '#/components/schemas/ScriptCreator'
+            - type: string
         script_profiles:
           type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ScriptProfile'
           x-oapi-codegen-extra-tags:
             tfsdk: script_profiles
         status:
           type: string
           x-oapi-codegen-extra-tags:
             tfsdk: status
+          enum:
+            - ARCHIVED
+            - REDACTED
+            - ACTIVE
+            - V1
         attachments:
           type: array
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: attachments
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ScriptAttachment'
+              - type: integer
         code:
           type: string
           x-oapi-codegen-extra-tags:
             tfsdk: code
+          nullable: true
         interpreter:
           type: string
           x-oapi-codegen-extra-tags:
             tfsdk: interpreter
+          nullable: true
         access_group:
           type: string
           x-oapi-codegen-extra-tags:
@@ -211,156 +237,76 @@ components:
             tfsdk: time_limit
         username:
           type: string
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: username
         is_redactable:
           type: boolean
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: is_redactable
         is_editable:
           type: boolean
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: is_editable
         is_executable:
           type: boolean
+          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: is_executable
       required:
         - id
         - title
-    CreateScriptAction:
+        - status
+    ScriptCreator:
       type: object
-      additionalProperties: false
+      x-oapi-codegen-extra-tags:
+        tfsdk: created_by
       properties:
-        title:
-          type: string
-          description: Title for the new script.
-          x-oapi-codegen-extra-tags:
-            tfsdk: title
-        time_limit:
+        id:
           type: integer
-          description: Maximum number of seconds the script may execute.
+          nullable: true
           x-oapi-codegen-extra-tags:
-            tfsdk: time_limit
-        code:
+            tfsdk: id
+        name:
           type: string
-          description: Script contents encoded as base64 UTF-8.
+          nullable: true
           x-oapi-codegen-extra-tags:
-            tfsdk: code
-        username:
-          type: string
-          description: System user under which the script runs.
-          x-oapi-codegen-extra-tags:
-            tfsdk: username
-        access_group:
-          type: string
-          description: Access group to assign the script to.
-          x-oapi-codegen-extra-tags:
-            tfsdk: access_group
+            tfsdk: name
       required:
-        - title
-        - code
-    EditScriptAction:
+        - id
+        - name
+    ScriptAttachment:
       type: object
-      additionalProperties: false
+      x-oapi-codegen-extra-tags:
+        tfsdk: attachments
       properties:
-        script_id:
+        id:
           type: integer
-          description: Identifier of the script being edited.
           x-oapi-codegen-extra-tags:
-            tfsdk: script_id
-        title:
-          type: string
-          description: Updated script title.
-          x-oapi-codegen-extra-tags:
-            tfsdk: title
-        time_limit:
-          type: integer
-          description: Updated execution time limit in seconds.
-          x-oapi-codegen-extra-tags:
-            tfsdk: time_limit
-        code:
-          type: string
-          description: Updated script contents encoded as base64 UTF-8.
-          x-oapi-codegen-extra-tags:
-            tfsdk: code
-        username:
-          type: string
-          description: Updated system user to execute the script.
-          x-oapi-codegen-extra-tags:
-            tfsdk: username
-      required:
-        - script_id
-    CopyScriptAction:
-      type: object
-      additionalProperties: false
-      properties:
-        script_id:
-          type: integer
-          description: ID of the script to copy.
-          x-oapi-codegen-extra-tags:
-            tfsdk: script_id
-        destination_title:
-          type: string
-          description: Title for the cloned script.
-          x-oapi-codegen-extra-tags:
-            tfsdk: destination_title
-        access_group:
-          type: string
-          description: Access group for the cloned script.
-          x-oapi-codegen-extra-tags:
-            tfsdk: access_group
-      required:
-        - script_id
-        - destination_title
-    RemoveScriptAction:
-      type: object
-      additionalProperties: false
-      properties:
-        script_id:
-          type: integer
-          description: Identifier of the script to remove.
-          x-oapi-codegen-extra-tags:
-            tfsdk: script_id
-      required:
-        - script_id
-    CreateScriptAttachmentAction:
-      type: object
-      additionalProperties: false
-      properties:
-        script_id:
-          type: integer
-          description: Identifier of the script receiving the attachment.
-          x-oapi-codegen-extra-tags:
-            tfsdk: script_id
-        file:
-          type: string
-          description: Attachment payload in the format `<filename>$$<base64 contents>`.
-          x-oapi-codegen-extra-tags:
-            tfsdk: file
-      required:
-        - script_id
-        - file
-    RemoveScriptAttachmentAction:
-      type: object
-      additionalProperties: false
-      properties:
-        script_id:
-          type: integer
-          description: Identifier of the script owning the attachment.
-          x-oapi-codegen-extra-tags:
-            tfsdk: script_id
+            tfsdk: id
         filename:
           type: string
-          description: Name of the attachment to remove.
           x-oapi-codegen-extra-tags:
             tfsdk: filename
       required:
-        - script_id
+        - id
         - filename
-    LegacyActionRequest:
-      description: Legacy actions accept their parameters via query string and do not define a request body schema.
+    ScriptProfile:
       type: object
+      properties:
+        id:
+          type: integer
+          x-oapi-codegen-extra-tags:
+            tfsdk: id
+        title:
+          type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: title
+      required:
+        - id
+        - title
     LegacyActionResult:
       oneOf:
         - $ref: '#/components/schemas/Script'

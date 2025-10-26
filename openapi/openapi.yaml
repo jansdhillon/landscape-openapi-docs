@@ -77,20 +77,12 @@ components:
   schemas:
     Script:
       $ref: "./components/schemas/script.yaml#/Script"
-    CreateScriptAction:
-      $ref: "./components/schemas/legacy.yaml#/CreateScriptAction"
-    EditScriptAction:
-      $ref: "./components/schemas/legacy.yaml#/EditScriptAction"
-    CopyScriptAction:
-      $ref: "./components/schemas/legacy.yaml#/CopyScriptAction"
-    RemoveScriptAction:
-      $ref: "./components/schemas/legacy.yaml#/RemoveScriptAction"
-    CreateScriptAttachmentAction:
-      $ref: "./components/schemas/legacy.yaml#/CreateScriptAttachmentAction"
-    RemoveScriptAttachmentAction:
-      $ref: "./components/schemas/legacy.yaml#/RemoveScriptAttachmentAction"
-    LegacyActionRequest:
-      $ref: "./components/schemas/legacy.yaml#/LegacyActionRequest"
+    ScriptCreator:
+      $ref: "./components/schemas/script.yaml#/ScriptCreator"
+    ScriptAttachment:
+      $ref: "./components/schemas/script.yaml#/ScriptAttachment"
+    ScriptProfile:
+      $ref: "./components/schemas/script.yaml#/ScriptProfile"
     LegacyActionResult:
       $ref: "./components/schemas/legacy.yaml#/LegacyActionResult"
     LoginRequest:
