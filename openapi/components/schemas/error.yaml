@@ -3,5 +3,9 @@ Error:
   properties:
     code:
       type: integer
+      x-oapi-codegen-extra-tags:
+        tfsdk: "code"
     message:
       type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "message"

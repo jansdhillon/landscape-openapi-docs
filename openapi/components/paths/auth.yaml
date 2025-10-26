@@ -3,7 +3,7 @@ paths:
     post:
       tags:
         - Authentication
-      operationId: loginWithPassword
+      operationId: login_with_password
       summary: Authenticate with email and password.
       requestBody:
         required: true
@@ -27,7 +27,7 @@ paths:
     post:
       tags:
         - Authentication
-      operationId: loginWithAccessKey
+      operationId: login_with_access_key
       summary: Authenticate with access and secret key.
       requestBody:
         required: true
