@@ -149,8 +149,8 @@ Script:
         tfsdk: "attachments"
       items:
         oneOf:
+          - type: string
           - $ref: "#/ScriptAttachments"
-          - $ref: "#/LegacyScriptAttachments"
     code:
       type: string
       x-oapi-codegen-extra-tags:

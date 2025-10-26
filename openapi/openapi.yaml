@@ -83,8 +83,6 @@ components:
       $ref: "./components/schemas/script.yaml#/ScriptAttachments"
     LegacyScriptCreator:
       $ref: "./components/schemas/script.yaml#/LegacyScriptCreator"
-    LegacyScriptAttachments:
-      $ref: "./components/schemas/script.yaml#/LegacyScriptAttachments"
     ScriptProfile:
       $ref: "./components/schemas/script.yaml#/ScriptProfile"
     LegacyActionResult:
