@@ -17,7 +17,33 @@ ScriptCreator:
     - id
     - name
 
-ScriptAttachment:
+LegacyScriptCreator:
+  type: object
+  x-oapi-codegen-extra-tags:
+    tfsdk: "creator"
+  properties:
+    id:
+      type: integer
+      nullable: true
+      x-oapi-codegen-extra-tags:
+        tfsdk: "id"
+    name:
+      type: string
+      nullable: true
+      x-oapi-codegen-extra-tags:
+        tfsdk: "name"
+    email:
+      type: string
+      format: email
+      nullable: true
+      x-oapi-codegen-extra-tags:
+        tfsdk: "email"
+  required:
+    - id
+    - name
+    - email
+
+ScriptAttachments:
   type: object
   x-oapi-codegen-extra-tags:
     tfsdk: "attachments"
@@ -32,6 +58,18 @@ ScriptAttachment:
         tfsdk: "filename"
   required:
     - id
+    - filename
+
+LegacyScriptAttachments:
+  type: object
+  x-oapi-codegen-extra-tags:
+    tfsdk: "attachments"
+  properties:
+    filename:
+      type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "filename"
+  required:
     - filename
 
 ScriptProfile:
@@ -73,8 +111,9 @@ Script:
     created_by:
       $ref: "#/ScriptCreator"
       nullable: true
-      x-oapi-codegen-extra-tags:
-        tfsdk: "created_by"
+    creator:
+      $ref: "#/LegacyScriptCreator"
+      nullable: true
     last_edited_at:
       type: string
       nullable: true
@@ -86,7 +125,7 @@ Script:
         tfsdk: "last_edited_by"
       oneOf:
         - $ref: "#/ScriptCreator"
-        - type: string
+        - $ref: "#/LegacyScriptCreator"
     script_profiles:
       type: array
       nullable: true
@@ -110,8 +149,8 @@ Script:
         tfsdk: "attachments"
       items:
         oneOf:
-          - $ref: "#/ScriptAttachment"
-          - type: integer
+          - $ref: "#/ScriptAttachments"
+          - $ref: "#/LegacyScriptAttachments"
     code:
       type: string
       x-oapi-codegen-extra-tags:

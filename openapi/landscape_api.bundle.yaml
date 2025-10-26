@@ -178,8 +178,9 @@ components:
         created_by:
           $ref: '#/components/schemas/ScriptCreator'
           nullable: true
-          x-oapi-codegen-extra-tags:
-            tfsdk: created_by
+        creator:
+          $ref: '#/components/schemas/LegacyScriptCreator'
+          nullable: true
         last_edited_at:
           type: string
           nullable: true
@@ -191,7 +192,7 @@ components:
             tfsdk: last_edited_by
           oneOf:
             - $ref: '#/components/schemas/ScriptCreator'
-            - type: string
+            - $ref: '#/components/schemas/LegacyScriptCreator'
         script_profiles:
           type: array
           nullable: true
@@ -215,8 +216,8 @@ components:
             tfsdk: attachments
           items:
             oneOf:
-              - $ref: '#/components/schemas/ScriptAttachment'
-              - type: integer
+              - $ref: '#/components/schemas/ScriptAttachments'
+              - $ref: '#/components/schemas/LegacyScriptAttachments'
         code:
           type: string
           x-oapi-codegen-extra-tags:
@@ -277,7 +278,7 @@ components:
       required:
         - id
         - name
-    ScriptAttachment:
+    ScriptAttachments:
       type: object
       x-oapi-codegen-extra-tags:
         tfsdk: attachments
@@ -292,6 +293,42 @@ components:
             tfsdk: filename
       required:
         - id
+        - filename
+    LegacyScriptCreator:
+      type: object
+      x-oapi-codegen-extra-tags:
+        tfsdk: creator
+      properties:
+        id:
+          type: integer
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: id
+        name:
+          type: string
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: name
+        email:
+          type: string
+          format: email
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: email
+      required:
+        - id
+        - name
+        - email
+    LegacyScriptAttachments:
+      type: object
+      x-oapi-codegen-extra-tags:
+        tfsdk: attachments
+      properties:
+        filename:
+          type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: filename
+      required:
         - filename
     ScriptProfile:
       type: object
