@@ -43,10 +43,8 @@ LegacyScriptCreator:
     - name
     - email
 
-ScriptAttachments:
+ScriptAttachment:
   type: object
-  x-oapi-codegen-extra-tags:
-    tfsdk: "attachments"
   properties:
     id:
       type: integer
@@ -60,17 +58,8 @@ ScriptAttachments:
     - id
     - filename
 
-LegacyScriptAttachments:
-  type: object
-  x-oapi-codegen-extra-tags:
-    tfsdk: "attachments"
-  properties:
-    filename:
-      type: string
-      x-oapi-codegen-extra-tags:
-        tfsdk: "filename"
-  required:
-    - filename
+LegacyScriptAttachment:
+  type: string
 
 ScriptProfile:
   type: object
@@ -149,8 +138,8 @@ Script:
         tfsdk: "attachments"
       items:
         oneOf:
-          - type: string
-          - $ref: "#/ScriptAttachments"
+          - $ref: "#/ScriptAttachment"
+          - $ref: "#/LegacyScriptAttachment"
     code:
       type: string
       x-oapi-codegen-extra-tags:
