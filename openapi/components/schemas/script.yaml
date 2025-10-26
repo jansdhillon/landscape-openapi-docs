@@ -1,3 +1,54 @@
+ScriptCreator:
+  type: object
+  x-oapi-codegen-extra-tags:
+    tfsdk: "created_by"
+  properties:
+    id:
+      type: integer
+      nullable: true
+      x-oapi-codegen-extra-tags:
+        tfsdk: "id"
+    name:
+      type: string
+      nullable: true
+      x-oapi-codegen-extra-tags:
+        tfsdk: "name"
+  required:
+    - id
+    - name
+
+ScriptAttachment:
+  type: object
+  x-oapi-codegen-extra-tags:
+    tfsdk: "attachments"
+  properties:
+    id:
+      type: integer
+      x-oapi-codegen-extra-tags:
+        tfsdk: "id"
+    filename:
+      type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "filename"
+  required:
+    - id
+    - filename
+
+ScriptProfile:
+  type: object
+  properties:
+    id:
+      type: integer
+      x-oapi-codegen-extra-tags:
+        tfsdk: "id"
+    title:
+      type: string
+      x-oapi-codegen-extra-tags:
+        tfsdk: "title"
+  required:
+    - id
+    - title
+
 Script:
   type: object
   properties:
@@ -9,42 +60,69 @@ Script:
       type: string
       x-oapi-codegen-extra-tags:
         tfsdk: "title"
-    version:
+    version_number:
       type: integer
+      nullable: true
       x-oapi-codegen-extra-tags:
-        tfsdk: "version"
+        tfsdk: "version_number"
     created_at:
       type: string
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "created_at"
     created_by:
-      type: string
+      $ref: "#/ScriptCreator"
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "created_by"
-    last_edited_by:
+    last_edited_at:
       type: string
+      nullable: true
+      x-oapi-codegen-extra-tags:
+        tfsdk: "last_edited_at"
+    last_edited_by:
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "last_edited_by"
+      oneOf:
+        - $ref: "#/ScriptCreator"
+        - type: string
     script_profiles:
       type: array
+      nullable: true
+      items:
+        $ref: "#/ScriptProfile"
       x-oapi-codegen-extra-tags:
         tfsdk: "script_profiles"
     status:
       type: string
       x-oapi-codegen-extra-tags:
         tfsdk: "status"
+      enum:
+        - ARCHIVED
+        - REDACTED
+        - ACTIVE
+        - V1
     attachments:
       type: array
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "attachments"
+      items:
+        oneOf:
+          - $ref: "#/ScriptAttachment"
+          - type: integer
     code:
       type: string
       x-oapi-codegen-extra-tags:
         tfsdk: "code"
+      # Used ot be a separate endpoint for v1 scripts.
+      nullable: true
     interpreter:
       type: string
       x-oapi-codegen-extra-tags:
         tfsdk: "interpreter"
+      nullable: true
     access_group:
       type: string
       x-oapi-codegen-extra-tags:
@@ -55,20 +133,25 @@ Script:
         tfsdk: "time_limit"
     username:
       type: string
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "username"
     is_redactable:
       type: boolean
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "is_redactable"
     is_editable:
       type: boolean
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "is_editable"
     is_executable:
       type: boolean
+      nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "is_executable"
   required:
     - id
     - title
+    - status
