@@ -5,11 +5,15 @@ LoginRequest:
     email:
       type: string
       format: email
-      description: Email address used to authenticate with Landscape.
+      description: Email address used to authenticate with Landscape Server.
     password:
       type: string
       format: password
-      description: Account password associated with the provided email.
+      description: Password associated with the provided email.
+    account:
+      type: string
+      nullable: true
+      description: The account to login into (optional).
   required:
     - email
     - password
