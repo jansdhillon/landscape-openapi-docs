@@ -112,9 +112,7 @@ Script:
       nullable: true
       x-oapi-codegen-extra-tags:
         tfsdk: "last_edited_by"
-      oneOf:
-        - $ref: "#/ScriptCreator"
-        - $ref: "#/LegacyScriptCreator"
+      $ref: "#/ScriptCreator"
     script_profiles:
       type: array
       nullable: true
