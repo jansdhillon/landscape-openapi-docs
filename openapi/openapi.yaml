@@ -79,6 +79,8 @@ components:
       $ref: "./components/schemas/script.yaml#/Script"
     ScriptCreator:
       $ref: "./components/schemas/script.yaml#/ScriptCreator"
+    ScriptEditor:
+      $ref: "./components/schemas/script.yaml#/ScriptEditor"
     ScriptAttachment:
       $ref: "./components/schemas/script.yaml#/ScriptAttachment"
     LegacyScriptAttachment:

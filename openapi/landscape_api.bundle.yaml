@@ -190,9 +190,7 @@ components:
           nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: last_edited_by
-          oneOf:
-            - $ref: '#/components/schemas/ScriptCreator'
-            - $ref: '#/components/schemas/LegacyScriptCreator'
+          $ref: '#/components/schemas/ScriptEditor'
         script_profiles:
           type: array
           nullable: true
@@ -270,11 +268,33 @@ components:
           nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: id
+          description: The ID of the person who created the script.
         name:
           type: string
           nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: name
+          description: The name of the person who created the script.
+      required:
+        - id
+        - name
+    ScriptEditor:
+      type: object
+      x-oapi-codegen-extra-tags:
+        tfsdk: last_edited_by
+      properties:
+        id:
+          type: integer
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: id
+          description: The ID of the person who edited the script.
+        name:
+          type: string
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: name
+          description: The name of the person who edited the script.
       required:
         - id
         - name
