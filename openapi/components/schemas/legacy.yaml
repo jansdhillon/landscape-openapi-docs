@@ -12,5 +12,6 @@ CreateScriptAttachmentResult:
 
 LegacyActionResult:
   oneOf:
-    - $ref: "../schemas/script.yaml#/Script"
+    - $ref: "../schemas/script.yaml#/V1Script"
+    - $ref: "../schemas/script.yaml#/V2Script"
     - $ref: "#/CreateScriptAttachmentResult"
