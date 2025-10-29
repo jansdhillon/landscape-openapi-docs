@@ -22,7 +22,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Script'
+                oneOf:
+                  - $ref: '#/components/schemas/V1Script'
+                  - $ref: '#/components/schemas/V2Script'
         '404':
           $ref: '#/components/responses/ScriptNotFound'
   '/api/scripts/{script_id}:archive':
@@ -154,7 +156,51 @@ components:
         minLength: 1
       description: The legacy API action name to invoke.
   schemas:
-    Script:
+    V1Script:
+      type: object
+      properties:
+        id:
+          type: integer
+          x-oapi-codegen-extra-tags:
+            tfsdk: id
+        title:
+          type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: title
+        creator:
+          $ref: '#/components/schemas/LegacyScriptCreator'
+          nullable: true
+        status:
+          type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: status
+          enum:
+            - V1
+        attachments:
+          type: array
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: attachments
+          items:
+            $ref: '#/components/schemas/LegacyScriptAttachment'
+        access_group:
+          type: string
+          x-oapi-codegen-extra-tags:
+            tfsdk: access_group
+        time_limit:
+          type: integer
+          x-oapi-codegen-extra-tags:
+            tfsdk: time_limit
+        username:
+          type: string
+          nullable: true
+          x-oapi-codegen-extra-tags:
+            tfsdk: username
+      required:
+        - id
+        - title
+        - status
+    V2Script:
       type: object
       properties:
         id:
@@ -177,9 +223,6 @@ components:
             tfsdk: created_at
         created_by:
           $ref: '#/components/schemas/ScriptCreator'
-          nullable: true
-        creator:
-          $ref: '#/components/schemas/LegacyScriptCreator'
           nullable: true
         last_edited_at:
           type: string
@@ -206,26 +249,21 @@ components:
             - ARCHIVED
             - REDACTED
             - ACTIVE
-            - V1
         attachments:
           type: array
           nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: attachments
           items:
-            oneOf:
-              - $ref: '#/components/schemas/ScriptAttachment'
-              - $ref: '#/components/schemas/LegacyScriptAttachment'
+            $ref: '#/components/schemas/ScriptAttachment'
         code:
           type: string
           x-oapi-codegen-extra-tags:
             tfsdk: code
-          nullable: true
         interpreter:
           type: string
           x-oapi-codegen-extra-tags:
             tfsdk: interpreter
-          nullable: true
         access_group:
           type: string
           x-oapi-codegen-extra-tags:
@@ -241,18 +279,15 @@ components:
             tfsdk: username
         is_redactable:
           type: boolean
-          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: is_redactable
         is_editable:
           type: boolean
-          nullable: true
           x-oapi-codegen-extra-tags:
             tfsdk: is_editable
         is_executable:
           type: boolean
-          nullable: true
-          x-oapi-codegen-extra-tags:
+          x-oapi-codegenw-extra-tags:
             tfsdk: is_executable
       required:
         - id
@@ -355,7 +390,8 @@ components:
         - title
     LegacyActionResult:
       oneOf:
-        - $ref: '#/components/schemas/Script'
+        - $ref: '#/components/schemas/V1Script'
+        - $ref: '#/components/schemas/V2Script'
         - type: object
           additionalProperties: false
           properties:

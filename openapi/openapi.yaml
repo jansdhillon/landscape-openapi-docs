@@ -75,12 +75,14 @@ components:
       $ref: "./components/parameters/legacy.yaml#/LegacyActionParam"
 
   schemas:
-    Script:
-      $ref: "./components/schemas/script.yaml#/Script"
+    V1Script:
+      $ref: "./components/schemas/script.yaml#/V1Script"
+    V2Script:
+      $ref: "./components/schemas/script.yaml#/V2Script"
     ScriptCreator:
-      $ref: "./components/schemas/script.yaml#/ScriptCreator"
+      $ref: "./components/schemas/script.yaml#/ScriptCreatedBy"
     ScriptEditor:
-      $ref: "./components/schemas/script.yaml#/ScriptEditor"
+      $ref: "./components/schemas/script.yaml#/ScriptLastEditedBy"
     ScriptAttachment:
       $ref: "./components/schemas/script.yaml#/ScriptAttachment"
     LegacyScriptAttachment:

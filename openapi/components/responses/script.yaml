@@ -3,4 +3,6 @@ GetScriptResponse:
   content:
     application/json:
       schema:
-        $ref: "../schemas/script.yaml#/Script"
+        oneOf:
+          - $ref: "../schemas/script.yaml#/V1Script"
+          - $ref: "../schemas/script.yaml#/V2Script"
